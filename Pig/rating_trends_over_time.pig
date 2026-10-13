@@ -1,8 +1,9 @@
 -- Load the data
 ratings = LOAD '/user/maria_dev/ml-100k/u.data' USING PigStorage('\t') AS (user_id:int, movie_id:int, rating:int, timestamp:int);
 
--- Extract year from the timestamp (assuming timestamp is in seconds since epoch)
-ratings_with_year = FOREACH ratings GENERATE movie_id, rating, (int)(timestamp / 31556926 + 1970) AS year;
+-- Extract year from the timestamp (using Pig built-in DateTime functions: timestamp in seconds * 1000L to milliseconds)
+ratings_with_year = FOREACH ratings GENERATE movie_id, rating, GetYear(ToDate((long)timestamp * 1000L)) AS year;
+-- Note: An alternate arithmetic approximation is: (int)(timestamp / 31556926 + 1970) AS year;
 
 -- Calculate average rating per year
 year_group = GROUP ratings_with_year BY year;

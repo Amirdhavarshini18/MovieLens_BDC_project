@@ -24,7 +24,7 @@ sqoop import \
 sqoop import \
 --connect jdbc:mysql://localhost/movielens \
 --driver com.mysql.jdbc.Driver \
---table genre_movies \
+--table genres_movies \
 -m 1 \
 --username root \
 --password hadoop \

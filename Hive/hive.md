@@ -24,11 +24,13 @@ We loaded our datasets into Hive tables using the following steps:
    ```sql
    CREATE EXTERNAL TABLE movies (
        movie_id INT,
-       movie_title STRING,
-       genre STRING
+       title STRING,
+       release_date STRING,
+       video_release_date STRING,
+       imdb_url STRING
    )
    ROW FORMAT DELIMITED
-   FIELDS TERMINATED BY ','
+   FIELDS TERMINATED BY '|'
    STORED AS TEXTFILE
    LOCATION '/user/maria_dev/ml-100k/movies';
    ```

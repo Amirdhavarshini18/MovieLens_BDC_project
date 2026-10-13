@@ -20,25 +20,36 @@ In our MapReduce implementation, the mapper reads input from stdin and writes ou
 1. **Mapper**: Reads input from stdin, processes each line, and writes key-value pairs to stdout.
 2. **Reducer**: Reads intermediate key-value pairs from stdin and writes the final output to stdout.
 
-#### Saving and Running the Python Script
+#### Running the MapReduce Scripts
 
-To save and execute our Python script using Hadoop Streaming, we followed these steps:
+You can run any of the six scripts directly using Python and `mrjob` on your local machine:
 
-1. **Save the Python Script**: Save the mapper and reducer logic in a Python file (e.g., `rating_trends.py`).
-2. **Run the Hadoop Streaming Job**:
-   ```bash
-   python rating_trends.py input_file_name
-   ```
+```powershell
+# 1. Rating Distribution (Counts per rating 1-5)
+python MapReduce/ratingsdistribution.py ml-100k/u.data
 
-   In this command:
-   - `input_file_name`: Specifies the input file that contains the data to be processed.
+# 2. Movie Popularity (Sorted descending by number of ratings)
+python MapReduce/moviepopularity.py ml-100k/u.data
 
-**Note**: Ensure that the following are installed and set up:
-- **Python**: Python should be pre-installed on your system.
-- **mrjob library**: Install the `mrjob` library using pip:
-  ```bash
-  pip install mrjob
-  ```
-- **Hadoop**: Hadoop should be installed and configured on your system to run Hadoop Streaming jobs.
+# 3. User Activity (Sorted descending by number of ratings given by each user)
+python MapReduce/useractivity.py ml-100k/u.data
 
-By understanding and utilizing Hadoop Streaming, we can leverage the power of Hadoop with the flexibility of Python for efficient data processing.
+# 4. Movie Average Ratings (Average rating per movie ID)
+python MapReduce/movieaverageratings.py ml-100k/u.data
+
+# 5. Rating Trends (Rating count and average rating per year)
+python MapReduce/RatingTrends.py ml-100k/u.data
+
+# 6. Top Rated Movies (Sorted descending by average rating, default min 50 ratings)
+python MapReduce/topratedmovies.py ml-100k/u.data
+
+# Optional: View all 1,682 movies without a minimum threshold
+python MapReduce/topratedmovies.py ml-100k/u.data --min-ratings 0
+```
+
+**Prerequisites**:
+- **Python**: 3.7+
+- **mrjob library**: Install with `pip install mrjob`
+- **Hadoop (Optional)**: Required only if running on a real Hadoop cluster with `-r hadoop`.
+
+By utilizing `mrjob`, you can develop and test MapReduce algorithms locally on your laptop without needing a running Hadoop cluster, while remaining fully compatible with Hadoop Streaming in production.

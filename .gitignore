@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Generated MapReduce and Spark outputs
+MapReduce/output_*/
+movie_average_ratings.txt
+movie_popularity.txt
+rating_trends.txt
+ratings_distribution.txt
+top_rated_movies.txt
+user_activity.txt
+
+# Local Hive configuration and metastore
+Hive/docker-conf/
+Hive/metastore-db/
+
+# Archives and temporary files
+*.zip
+*.log
+*.tmp
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -19,10 +19,12 @@ Apache Sqoop is a powerful tool designed for efficiently transferring bulk data 
 
 ### Points to Remember
 
-- **Connection Management**: Ensure correct configuration of JDBC connection parameters (URL, username, password) for establishing connections with the relational database.
+- **Project Status (Apache Attic)**: Apache Sqoop was officially retired in June 2021. For modern production pipelines, tools such as Apache NiFi, Spark JDBC, or Debezium/Kafka Connect are commonly used.
+- **Connection Management & Drivers**: Ensure correct configuration of JDBC connection parameters. Modern MySQL Connector/J uses `com.mysql.cj.jdbc.Driver` instead of legacy `com.mysql.jdbc.Driver`.
+- **Field Delimiters**: When exporting Hive tables, ensure `--input-fields-terminated-by` matches the Hive table definition (`\t` for tab-separated tables like `ratings`, `|` for pipe-separated tables like `movies`).
 - **Data Types and Schema Mapping**: Sqoop automatically handles data type mapping between Hadoop and relational databases. However, it is essential to review and adjust the mappings if necessary to ensure data integrity.
 - **Error Handling**: Monitor Sqoop jobs for errors and manage error logs to ensure reliable data transfer.
-- **Performance Tuning**: Optimize Sqoop performance by tuning parameters like `--num-mappers` to control parallelism during data transfer operations.
+- **Performance Tuning**: Optimize Sqoop performance by tuning parameters like `-m 1` or `--num-mappers` to control parallelism during data transfer operations.
 - **Table Preparation**: Ensure that the tables you will use for Sqoop import and export are defined prior to running the Sqoop commands.
 
 ### Important Commands

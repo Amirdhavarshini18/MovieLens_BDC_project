@@ -1,11 +1,18 @@
+import sys
+import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, from_unixtime, year, avg
 
 # Initialize Spark Session
 spark = SparkSession.builder.appName("RatingTrendsOverTime").getOrCreate()
 
+# Resolve data path: accepts command-line argument, falls back to local file if present, or HDFS default
+input_path = sys.argv[1] if len(sys.argv) > 1 else (
+    "ml-100k/u.data" if os.path.exists("ml-100k/u.data") else "/user/maria_dev/ml-100k/u.data"
+)
+
 # Load the ratings data
-ratings = spark.read.csv("/user/maria_dev/ml-100k/u.data", sep="\t", inferSchema=True)
+ratings = spark.read.csv(input_path, sep="\t", inferSchema=True)
 ratings = ratings.withColumnRenamed("_c0", "user_id") \
                  .withColumnRenamed("_c1", "movie_id") \
                  .withColumnRenamed("_c2", "rating") \
