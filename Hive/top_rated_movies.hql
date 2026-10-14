@@ -1,3 +1,5 @@
+USE movielens;
+
 -- Query to find the top-rated movies with at least 50 ratings
 SELECT m.movie_id, m.title, AVG(r.rating) AS avg_rating, COUNT(r.rating) AS num_ratings
 FROM ratings r

@@ -6,27 +6,27 @@ HERE, WE HAVE USED HORTONWORK'S MYSQL HOSTED ON LOCALHOST FOR OUR QUERIES. THE T
 
 -- 1. EXPORTING GENRES DATA TO MYSQL TABLE (genres_export_table)
 
-sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table genres_export_table --username root --password hadoop --export-dir /apps/hive/warehouse/genres --input-fields-terminated-by ',' -m 1
+sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.cj.jdbc.Driver --table genres_export_table --username root --password hadoop --export-dir /user/hive/warehouse/movielens.db/genres --input-fields-terminated-by ',' -m 1
 
 -- 2. EXPORTING GENRES_MOVIES DATA TO MYSQL TABLE (genres_movies_export_table)
 
-sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table genres_movies_export_table --username root --password hadoop --export-dir /apps/hive/warehouse/genres_movies --input-fields-terminated-by ',' -m 1
+sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.cj.jdbc.Driver --table genres_movies_export_table --username root --password hadoop --export-dir /user/hive/warehouse/movielens.db/genres_movies --input-fields-terminated-by ',' -m 1
 
 -- 3. EXPORTING MOVIES DATA TO MYSQL TABLE (movies_export_table)
 -- Note: MovieLens movies/u.item table in Hive is pipe-delimited ('|')
 
-sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table movies_export_table --username root --password hadoop --export-dir /apps/hive/warehouse/movies --input-fields-terminated-by '|' -m 1
+sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.cj.jdbc.Driver --table movies_export_table --username root --password hadoop --export-dir /user/hive/warehouse/movielens.db/movies --input-fields-terminated-by '|' -m 1
 
 -- 4. EXPORTING OCCUPATIONS DATA TO MYSQL TABLE (occupations_export_table)
 
-sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table occupations_export_table --username root --password hadoop --export-dir /apps/hive/warehouse/occupations --input-fields-terminated-by ',' -m 1
+sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.cj.jdbc.Driver --table occupations_export_table --username root --password hadoop --export-dir /user/hive/warehouse/movielens.db/occupations --input-fields-terminated-by ',' -m 1
 
 -- 5. EXPORTING RATINGS DATA TO MYSQL TABLE (ratings_export_table)
 -- Note: Ratings table in Hive is tab-delimited ('\t')
 
-sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table ratings_export_table --username root --password hadoop --export-dir /apps/hive/warehouse/ratings --input-fields-terminated-by '\t' -m 1
+sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.cj.jdbc.Driver --table ratings_export_table --username root --password hadoop --export-dir /user/hive/warehouse/movielens.db/ratings --input-fields-terminated-by '\t' -m 1
 
 
 -- 6. EXPORTING USER DATA TO MYSQL TABLE (user_export_table)
 
-sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table user_export_table --username root --password hadoop --export-dir /apps/hive/warehouse/users --input-fields-terminated-by '|' -m 1
+sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.cj.jdbc.Driver --table user_export_table --username root --password hadoop --export-dir /user/hive/warehouse/movielens.db/users --input-fields-terminated-by '|' -m 1

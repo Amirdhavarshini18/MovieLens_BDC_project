@@ -1,3 +1,5 @@
+USE movielens;
+
 -- Query to calculate the average rating per movie
 SELECT movie_id, AVG(rating) AS avg_rating
 FROM ratings

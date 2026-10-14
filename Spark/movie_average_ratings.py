@@ -21,8 +21,8 @@ ratings = ratings.withColumnRenamed("_c0", "user_id") \
 # Calculate the average rating per movie
 average_ratings = ratings.groupBy("movie_id").agg(avg("rating").alias("avg_rating"))
 
-# Show the average ratings for movies
-average_ratings.show(20)
+# Show the average ratings for movies sorted descending
+average_ratings.orderBy("avg_rating", ascending=False).show(20)
 
 # Stop the Spark session
 spark.stop()

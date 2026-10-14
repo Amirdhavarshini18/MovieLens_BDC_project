@@ -190,11 +190,27 @@ python Spark/ratings_distribution.py ml-100k/u.data
 
 ### 6. MapReduce (`mrjob`) Execution
 
-Run MapReduce streaming jobs locally:
-```powershell
+Run MapReduce streaming jobs locally (use your Python with mrjob installed):
+```bash
+# Run all 6 MapReduce jobs
 python MapReduce/ratingsdistribution.py ml-100k/u.data
+python MapReduce/moviepopularity.py ml-100k/u.data
+python MapReduce/movieaverageratings.py ml-100k/u.data
+python MapReduce/topratedmovies.py --movies ml-100k/u.item ml-100k/u.data
+python MapReduce/RatingTrends.py ml-100k/u.data
+python MapReduce/useractivity.py ml-100k/u.data
 ```
-Generated job outputs are preserved under `MapReduce/output_*/part-*` and summarized in the root `.txt` files (`ratings_distribution.txt`, `movie_popularity.txt`, `movie_average_ratings.txt`, `top_rated_movies.txt`, `user_activity.txt`, `rating_trends.txt`).
+
+Run Spark analytics jobs locally:
+```bash
+# Run all 6 PySpark jobs
+python Spark/ratings_distribution.py ml-100k/u.data
+python Spark/movie_popularity.py ml-100k/u.data
+python Spark/movie_average_ratings.py ml-100k/u.data
+python Spark/top_rated_movies.py ml-100k/u.data ml-100k/u.item
+python Spark/rating_trends_over_time.py ml-100k/u.data
+python Spark/user_activity.py ml-100k/u.data
+```
 
 ---
 
@@ -215,3 +231,20 @@ Generated job outputs are preserved under `MapReduce/output_*/part-*` and summar
   ```python
   spark.read.format("jdbc").option("url", "jdbc:mysql://fintech-mysql:3306/movielens")...
   ```
+
+---
+
+## Bug Fixes & Code Corrections (October 2026)
+
+The following issues were identified and fixed across the project:
+
+| # | File | Issue | Fix |
+|---|------|-------|-----|
+| 1 | `Hive/Movies_Table_definition.hql` | LOAD DATA path was `/user/movielens/hive_staging/u.item` — inconsistent with all other components | Fixed to `/user/maria_dev/ml-100k/u.item` |
+| 2 | All `Hive/*.hql` query files | No `USE movielens;` statement — queries would fail against wrong database | Added `USE movielens;` to all 7 query files; added `CREATE DATABASE IF NOT EXISTS movielens;` to `Movies_Table_definition.hql` |
+| 3 | `Pig/top_rated_movies.pig` | Filtered by `avg_rating > 4.0` — incompatible with Hive/Spark/MapReduce which filter by `num_ratings >= 50` | Replaced with `num_ratings >= 50` filter; also fixed `timestamp` type from `int` to `long` |
+| 4 | All `Sqoop/*.txt` command files | Used deprecated driver `com.mysql.jdbc.Driver` (removed in MySQL Connector/J 8.x) | Updated to `com.mysql.cj.jdbc.Driver` |
+| 5 | `Sqoop/Sqoop_Export_to_MYSQL.txt` | Export paths hardcoded to HDP-specific `/apps/hive/warehouse/` which does not exist on Docker cluster | Updated to standard `/user/hive/warehouse/movielens.db/` paths |
+| 6 | `Spark/movie_average_ratings.py` | `average_ratings.show(20)` had no `orderBy` — output was non-deterministic | Added `.orderBy("avg_rating", ascending=False)` |
+| 7 | `Spark/top_rated_movies.py` | No join with `u.item` for movie titles — output showed only numeric IDs | Added join with `u.item` (accepts path as second CLI arg); fixed charset `latin-1` → `iso-8859-1` for PySpark 4.x |
+| 8 | `MapReduce/moviepopularity.py` | Sort used confusing double-negation lambda with `reverse=True` | Simplified to clean `key=lambda x: (-x[0], int(x[1]))` without `reverse=True` |

@@ -1,3 +1,5 @@
+USE movielens;
+
 -- Query to find the number of ratings per user
 SELECT user_id, COUNT(*) AS num_ratings
 FROM ratings

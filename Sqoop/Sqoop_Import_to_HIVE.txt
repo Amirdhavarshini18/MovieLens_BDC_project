@@ -11,7 +11,7 @@ This approach simplifies the process of integrating data from relational databas
 
 sqoop import \
 --connect jdbc:mysql://localhost/movielens \
---driver com.mysql.jdbc.Driver \
+--driver com.mysql.cj.jdbc.Driver \
 --table genres \
 -m 1 \
 --username root \
@@ -23,7 +23,7 @@ sqoop import \
 
 sqoop import \
 --connect jdbc:mysql://localhost/movielens \
---driver com.mysql.jdbc.Driver \
+--driver com.mysql.cj.jdbc.Driver \
 --table genres_movies \
 -m 1 \
 --username root \
@@ -35,7 +35,7 @@ sqoop import \
 
 sqoop import \
 --connect jdbc:mysql://localhost/movielens \
---driver com.mysql.jdbc.Driver \
+--driver com.mysql.cj.jdbc.Driver \
 --table movies \
 -m 1 \
 --username root \
@@ -47,7 +47,7 @@ sqoop import \
 
 sqoop import \
 --connect jdbc:mysql://localhost/movielens \
---driver com.mysql.jdbc.Driver \
+--driver com.mysql.cj.jdbc.Driver \
 --table occupations \
 -m 1 \
 --username root \
@@ -59,7 +59,7 @@ sqoop import \
 
 sqoop import \
 --connect jdbc:mysql://localhost/movielens \
---driver com.mysql.jdbc.Driver \
+--driver com.mysql.cj.jdbc.Driver \
 --table ratings \
 -m 1 \
 --username root \
@@ -70,7 +70,7 @@ sqoop import \
 
 sqoop import \
 --connect jdbc:mysql://localhost/movielens \
---driver com.mysql.jdbc.Driver \
+--driver com.mysql.cj.jdbc.Driver \
 --table users \
 -m 1 \
 --username root \

@@ -1,3 +1,5 @@
+USE movielens;
+
 -- Query to find the distribution of ratings
 SELECT rating, COUNT(*) AS count
 FROM ratings

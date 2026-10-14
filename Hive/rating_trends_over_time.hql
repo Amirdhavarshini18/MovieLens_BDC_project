@@ -1,3 +1,5 @@
+USE movielens;
+
 -- Convert timestamp to year and create a temporary table
 CREATE TEMPORARY TABLE ratings_with_year AS
 SELECT *, FROM_UNIXTIME(timestamp, 'yyyy') AS year

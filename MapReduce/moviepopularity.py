@@ -24,11 +24,10 @@ class MoviePopularity(MRJob):
         yield None, (sum(counts), movie_id)
 
     def reducer_sort_popularity(self, _, movie_counts):
-        # Sort descending by count; tie-break numerically by movie_id
+        # Sort descending by count, then ascending by movie_id as tiebreaker
         sorted_movies = sorted(
             movie_counts,
-            key=lambda x: (x[0], -int(x[1]) if x[1].isdigit() else 0),
-            reverse=True
+            key=lambda x: (-x[0], int(x[1]) if str(x[1]).isdigit() else 0)
         )
         for count, movie_id in sorted_movies:
             yield movie_id, count

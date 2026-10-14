@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS movielens;
+USE movielens;
+
 -- Create the movies table for MovieLens 100K (u.item)
 -- u.item has 24 pipe-delimited (|) fields:
 -- movie_id | title | release_date | video_release_date | IMDb_URL |
@@ -34,4 +37,4 @@ ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '|';
 
 -- Load data into the movies table (u.item contains movie metadata)
-LOAD DATA INPATH '/user/movielens/hive_staging/u.item' INTO TABLE movies;
+LOAD DATA INPATH '/user/maria_dev/ml-100k/u.item' INTO TABLE movies;

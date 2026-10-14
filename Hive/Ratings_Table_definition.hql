@@ -1,4 +1,6 @@
 
+USE movielens;
+
 -- Create the ratings table
 CREATE TABLE IF NOT EXISTS ratings (
     user_id INT,
